@@ -2,5 +2,13 @@
 name = "adi_storage"
 version = "0.1.0"
 authors = ["Jeron Aldaron Lau <jeron.lau@plopgrizzly.tech>"]
+description = "Aldaron's Device Interface - Storage (adi_storage) is a Rust library for interfacing with a persistent storage device (ie: hard drive, solid state drive, sd card, flash drive, etc.)."
+keywords = ["storage", "file", "filesystem", "save", "load"]
+categories = ["filesystem", "hardware-support"] # ?future? "asynchronous", "compression", "concurrency", "database", "network-programming"
+license = "MIT"
+documentation = "http://at.plopgrizzly.tech/docs/adi_storage/"
+homepage = "http://at.plopgrizzly.tech/adi_storage/"
+repository = "https://github.com/aldarons-tech/adi_storage/"
+exclude = ["README.md"]
 
 [dependencies]

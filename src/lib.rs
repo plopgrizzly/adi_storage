@@ -4,17 +4,31 @@
 // Copyright 2017 (c) Jeron Lau
 // Licensed under the MIT LICENSE
 
+//! Aldaron's Device Interface - Storage (adi_storage) is a Rust library for
+//! interfacing with a persistent storage device (ie: hard drive, solid state
+//! drive, sd card, flash drive, etc.).
+
+#![doc(
+	html_logo_url =
+		"https://rawgit.com/aldarons-tech/adi_storage/master/res/icon.png",
+	html_favicon_url =
+		"https://rawgit.com/aldarons-tech/adi_storage/master/res/symbol.png",
+	html_root_url = "http://at.plopgrizzly.tech/utem/"
+)]
+
 use std::fs;
 use std::path::Path;
 use std::io::{ Read, Write };
 
+/// Whether a path is a file or a folder.
 pub enum PathType {
 	Folder,
 	File,
 }
 
-pub fn save<P: AsRef<Path>, B: AsRef<[u8]>>(name: P, data: B) -> () {
-	let path = name.as_ref();
+/// Save a file.
+pub fn save<P: AsRef<Path>, B: AsRef<[u8]>>(filename: P, data: B) -> () {
+	let path = filename.as_ref();
 	let parent = path.parent().unwrap();
 
 	if parent.exists() == false {
@@ -24,8 +38,9 @@ pub fn save<P: AsRef<Path>, B: AsRef<[u8]>>(name: P, data: B) -> () {
 	fs::File::create(path).unwrap().write_all(data.as_ref()).unwrap();
 }
 
-pub fn load<P: AsRef<Path>>(name: P) -> Vec<u8> {
-	let mut file = fs::File::open(name).unwrap();
+/// Load a file.
+pub fn load<P: AsRef<Path>>(filename: P) -> Vec<u8> {
+	let mut file = fs::File::open(filename).unwrap();
 	let mut contents = Vec::new();
 
 	file.read_to_end(&mut contents).unwrap();
@@ -33,39 +48,42 @@ pub fn load<P: AsRef<Path>>(name: P) -> Vec<u8> {
 	contents
 }
 
+/// Delete a file.
 pub fn rm<P: AsRef<Path>>(path: P) {
 	fs::remove_file(path).unwrap();
 }
 
+/// Delete a folder and all of it's contents ( use carefully ).
 pub fn rmdir<P: AsRef<Path>>(path: P) {
 	fs::remove_dir_all(path).unwrap();
 }
 
+/// Make a folder.
 pub fn mkdir<P: AsRef<Path>>(path: P) {
 	fs::create_dir_all(path).unwrap();
 }
 
 // Because: https://doc.rust-lang.org/std/fs/fn.rename.html Platform-Specifc...
 #[cfg(target_os = "linux")]
-fn mvto_ll<P: AsRef<Path>>(old: P, new: P) {
+fn mv_ll<P: AsRef<Path>>(old: P, new: P) {
 	rmdir(&new);
 	mkdir(&new);
 	fs::rename(old, new).unwrap();
 }
 
 /// Move or rename a file ( change it's path ).
-pub fn mvto<P: AsRef<Path>>(old: P, new: P) {
-	mvto_ll(old, new);
+pub fn mv<P: AsRef<Path>>(old: P, new: P) {
+	mv_ll(old, new);
 }
 
-/// 
+/// Get the permissions of a file.
 pub fn get_permissions<P: AsRef<Path>>(name: P) -> fs::Permissions {
 	let file = fs::File::open(name).unwrap();
 	
 	file.metadata().unwrap().permissions()
 }
 
-/// 
+/// Set the permissions of a file.
 pub fn set_permissions<P: AsRef<Path>>(name: P, permissions: fs::Permissions) -> () {
 	let file = fs::File::open(name).unwrap();
 
@@ -82,6 +100,7 @@ fn fnrm_first<P: AsRef<Path>>(input: P) -> String {
 	t
 }
 
+/// Duplicate a file.
 pub fn copy<P: AsRef<Path>>(src: P, dst: P) -> Result<(), String> {
 	let src = src.as_ref();
 	let dst = dst.as_ref();
@@ -123,10 +142,12 @@ pub fn copy<P: AsRef<Path>>(src: P, dst: P) -> Result<(), String> {
 	}
 }
 
-pub fn get_exists(name: &str) -> bool {
-	Path::new(name).exists()
+/// Returns true only if `filepath` exists.
+pub fn get_exists(filepath: &str) -> bool {
+	Path::new(filepath).exists()
 }
 
+/// Get the type of file at `path`, or `None` if there is no file at `path`.
 pub fn path_type<P: AsRef<Path>>(path: P) -> Option<PathType> {
 	let path = path.as_ref();
 
