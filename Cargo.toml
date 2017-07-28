@@ -9,6 +9,6 @@ license = "MIT"
 documentation = "http://at.plopgrizzly.tech/docs/adi_storage"
 homepage = "http://at.plopgrizzly.tech/adi_storage"
 repository = "https://github.com/aldarons-tech/adi_storage"
-exclude = ["README.md", "res/", ".gitignore"]
+exclude = ["README.md", "res/*", ".gitignore"]
 
 [dependencies]
