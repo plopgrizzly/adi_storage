@@ -1,0 +1,3 @@
+name = "%storage"
+comment = "%comment"
+description = "%read the root directory and user's username"

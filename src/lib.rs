@@ -16,6 +16,8 @@
 	html_root_url = "http://at.plopgrizzly.tech/utem/"
 )]
 
+extern crate whoami;
+
 use std::fs;
 use std::path::Path;
 use std::io::{ Read, Write };
@@ -24,6 +26,95 @@ use std::io::{ Read, Write };
 pub enum PathType {
 	Folder,
 	File,
+}
+
+/// A persistent storage device.
+pub struct Storage {
+	// "/app_name.developer/" on Aldaron's OS
+	// "/usr/local/share/at_root/app_name.developer/" on Linux
+	// "c:/program files/at_root/app_name.developer/" on Windows
+	app_root: String,
+	// The user currently logged in
+	user: String,
+}
+
+impl Storage {
+	/// Use the `storage!()` macro instead.
+	pub fn new(app_name: &str, developer: &str) -> Storage {
+		let mut app_root = if cfg!(target_os = "linux") {
+			"/usr/local/share/at_root/"
+		} else if cfg!(target_os = "windows") {
+			"C:/Program Files/at_root/"
+		} else if cfg!(target_os = "aldarons_os") {
+			"/"
+		} else {
+			panic!("AA!")
+		}.to_string();
+
+		// "/app_name.developer/"
+		app_root.push_str(&app_name.to_lowercase());
+		app_root.push_str(".");
+		app_root.push_str(&developer);
+		app_root.push_str("/");
+
+		// "/app_name.developer/user.main/"
+		// TODO: Only works/compiles for UNIX currently.
+		let mut user = String::new();
+
+		user.push_str(&whoami::username().to_lowercase());
+		user.push_str(".");
+		user.push_str(&whoami::computer());
+
+		Storage {
+			app_root: app_root,
+			user: user,
+		}
+	}
+
+	pub fn sync(&self) {
+	}
+}
+
+impl ::std::fmt::Display for Storage {
+	fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+		write!(f, "{{ app_root: \"{}\", user: \"{}\" }}", self.app_root,
+			self.user)
+	}
+}
+
+/// Storage
+#[macro_export] macro_rules! storage {
+	() => ( {
+		let app_name = env!("CARGO_PKG_NAME");
+		let developer = include!(concat!(env!("CARGO_MANIFEST_DIR"),
+			"/target/res/src/developer.rs"));
+
+		adi_storage::Storage::new(app_name, developer)
+	} )
+}
+
+/// Save a file.
+#[macro_export] macro_rules! file_save {
+	(file_name) => ( {
+		let app_name = include!(concat!(env!("CARGO_MANIFEST_DIR"),
+			"/target/res/src/name.rs"));
+		let developer = include!(concat!(env!("CARGO_MANIFEST_DIR"),
+			"/target/res/src/developer.rs"));
+		let mut app_root = STORAGE_MAIN.to_string();
+
+		// "/app_name.developer/"
+		app_root.push_str(app_name);
+		app_root.push_str(".");
+		app_root.push_str(developer);
+		app_root.push_str("/");
+
+		// "/app_name.developer/user.main/"
+		// TODO: Only works/compiles for UNIX currently.
+		let user = users::get_user_by_uid(users::get_current_uid());
+		app_root.push_str(user.unwrap());
+		app_root.push_str(".");
+		app_root.push_str(hostname::get_hostname().unwrap());
+	} )
 }
 
 /// Save a file.

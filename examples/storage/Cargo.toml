@@ -1,0 +1,18 @@
+[package]
+name = "storage_app"
+version = "0.1.0"
+authors = ["Jeron Aldaron Lau <jeron.lau@plopgrizzly.tech>"]
+build = "build.rs"
+homepage = "https://github.com/aldarons-tech"
+
+[dependencies]
+adi_storage = { path = "../../" }
+
+[build-dependencies]
+res = { path = "/home/aldaron/aldarons_tech/res" } #"0.1.0"
+
+[package.metadata.res]
+developer = "Aldaron's Tech"
+name = "%Storage App"
+comment = "%comment"
+description = "%read the root directory and user's username"

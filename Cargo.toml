@@ -12,3 +12,4 @@ repository = "https://github.com/aldarons-tech/adi_storage"
 exclude = ["README.md", "res/*", ".gitignore"]
 
 [dependencies]
+whoami = "0.1.0"
