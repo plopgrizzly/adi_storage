@@ -1,8 +1,8 @@
-// lib.rs
-// Aldaron's Device Interface / Storage
-// Copyright 2017 (c) Aldaron's Tech
-// Copyright 2017 (c) Jeron Lau
+// Aldaron's Device Interface - Storage - Demo
+// Copyright (c) 2017 Plop Grizzly, Jeron Lau <jeron.lau@plopgrizzly.com>
 // Licensed under the MIT LICENSE
+//
+// lib.rs
 
 #[macro_use]
 extern crate adi_storage;
