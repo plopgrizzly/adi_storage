@@ -2,7 +2,7 @@
 // Copyright (c) 2017 Plop Grizzly, Jeron Lau <jeron.lau@plopgrizzly.com>
 // Licensed under the MIT LICENSE
 //
-// lib.rs
+// src/lib.rs
 
 //! Aldaron's Device Interface - Storage (adi_storage) is a Rust library for
 //! interfacing with a persistent storage device (ie: hard drive, solid state
