@@ -1,4 +1,4 @@
-# Aldaron's Device Interface - Storage                                         #
+# Aldaron's Device Interface / Storage                                         #
 # Copyright (c) 2017 Plop Grizzly, Jeron Lau <jeron.lau@plopgrizzly.com>       #
 # Licensed under the MIT LICENSE                                               #
 #                             _        _                                       #
@@ -13,18 +13,37 @@
 #                           ¯————————————¯                                     #
 # Cargo.toml                                                                   #
 
+################################################################################
+
 [package]
 name = "adi_storage"
 version = "0.1.0"
-authors = ["Jeron Aldaron Lau <jeron.lau@plopgrizzly.tech>"]
-description = "Aldaron's Device Interface - Storage (adi_storage) is a Rust library for interfacing with a persistent storage device (ie: hard drive, solid state drive, sd card, flash drive, etc.)."
-keywords = ["storage", "file", "filesystem", "save", "load"]
-categories = ["filesystem", "hardware-support"] # ?future? "asynchronous", "compression", "concurrency", "database", "network-programming"
+authors = ["Jeron Aldaron Lau <jeron.lau@plopgrizzly.com>"]
+
+################################################################################
+
 license = "MIT"
 documentation = "https://docs.rs/adi_storage"
 homepage = "http://plopgrizzly.com/adi_storage"
 repository = "https://github.com/plopgrizzly/adi_storage"
-exclude = ["README.md", "res/*", ".gitignore"]
+
+################################################################################
+
+readme = "README.md"
+description = """
+    Aldaron's Device Interface / Storage is a library developed by Plop Grizzly
+    for interfacing with a persistent storage device (ie: hard drive, etc.)."
+"""
+keywords = ["storage", "file", "filesystem", "save", "load"]
+categories = ["filesystem", "hardware-support"] # ?future? "asynchronous", "compression", "concurrency", "database", "network-programming"
+
+################################################################################
+
+exclude = ["examples/*", "CODE_OF_CONDUCT.md", "CONTRIBUTING.md", ".gitignore"]
+
+################################################################################
 
 [dependencies]
 whoami = "0.1.0"
+
+################################################################################
