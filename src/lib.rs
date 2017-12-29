@@ -155,7 +155,6 @@ pub fn mkdir<P: AsRef<Path>>(path: P) {
 }
 
 // Because: https://doc.rust-lang.org/std/fs/fn.rename.html Platform-Specifc...
-#[cfg(target_os = "linux")]
 fn mv_ll<P: AsRef<Path>>(old: P, new: P) {
 	rmdir(&new);
 	mkdir(&new);
