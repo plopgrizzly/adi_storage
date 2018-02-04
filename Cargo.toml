@@ -17,7 +17,7 @@
 
 [package]
 name = "adi_storage"
-version = "0.1.0"
+version = "0.2.1"
 authors = ["Jeron Aldaron Lau <jeron.lau@plopgrizzly.com>"]
 
 ################################################################################
@@ -44,6 +44,6 @@ exclude = ["examples/*", "CODE_OF_CONDUCT.md", "CONTRIBUTING.md", ".gitignore"]
 ################################################################################
 
 [dependencies]
-whoami = "0.1.0"
+whoami = "0.2.0"
 
 ################################################################################
